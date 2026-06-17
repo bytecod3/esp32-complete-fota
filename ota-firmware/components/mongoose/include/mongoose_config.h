@@ -1,0 +1,15 @@
+/*
+ * mongoose_config.h
+ *
+ *  Created on: Jun 17, 2026
+ *      Author: edwin
+ */
+
+#ifndef COMPONENTS_MONGOOSE_INCLUDE_MONGOOSE_CONFIG_H_
+#define COMPONENTS_MONGOOSE_INCLUDE_MONGOOSE_CONFIG_H_
+
+#define MG_ARCH MG_ARCH_ESP32
+
+
+
+#endif /* COMPONENTS_MONGOOSE_INCLUDE_MONGOOSE_CONFIG_H_ */

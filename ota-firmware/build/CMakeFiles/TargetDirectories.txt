@@ -1089,6 +1089,13 @@
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/ulp/CMakeFiles/install.dir
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/ulp/CMakeFiles/install/local.dir
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/ulp/CMakeFiles/install/strip.dir
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/CMakeFiles/__idf_mongoose.dir
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/CMakeFiles/edit_cache.dir
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/CMakeFiles/rebuild_cache.dir
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/CMakeFiles/list_install_components.dir
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/CMakeFiles/install.dir
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/CMakeFiles/install/local.dir
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/CMakeFiles/install/strip.dir
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/CMakeFiles/__idf_main.dir
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/CMakeFiles/edit_cache.dir
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/CMakeFiles/rebuild_cache.dir

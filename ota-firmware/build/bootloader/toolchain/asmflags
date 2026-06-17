@@ -1,0 +1,6 @@
+"-specs=/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/bootloader/specs/picolibc.specs"
+-Wno-frame-address
+-mlongcalls
+-fno-builtin-memcpy
+-fno-builtin-memset
+-fno-builtin-bzero

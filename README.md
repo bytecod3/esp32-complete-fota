@@ -31,4 +31,6 @@ The following steps are built on ubuntu-linux:
 ```c idf.py monitor```
 
 #### Creating components
+TO create a components folder on root and add a component
+```c idf.py create-component -C components component_name```
 

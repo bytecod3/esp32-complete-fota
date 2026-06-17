@@ -157,6 +157,7 @@
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/rt/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/spiffs/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/ulp/cmake_install.cmake",
+		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/cmake_install.cmake"
 	],
 	"Parallel" : false
