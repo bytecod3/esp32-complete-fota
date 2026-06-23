@@ -4,8 +4,9 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 #include "mqtt.h"
-#include "esp_partition.h"
+#include "mqtt_settings.h"
 #include "mongoose.h"
 
 /**
@@ -31,16 +32,49 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		struct mg_str sub_t = mg_str(COMMANDS_TOPIC);
 		struct mg_str pub_t = mg_str(DATA_TOPIC);
 		
+		/* subscription options */
 		struct mg_mqtt_opts sub_opts;
 		memset(&sub_opts, 0, sizeof(sub_opts));
 		sub_opts.topic = sub_t;
 		sub_opts.qos = MQTT_QOS;
 		
+		mg_mqtt_sub(c, &sub_opts);
 		
+		MG_INFO(("%lu subscribed to %.*s ", c->id, (int) sub_t.len, sub_t.buf));
 		
+		/* publishing options  */
+		struct mg_mqtt_opts pub_opts;
+		memset(&pub_opts, 0, sizeof(pub_opts));
+		pub_opts.topic = pub_t;
+		pub_opts.message = data;
+		pub_opts.qos = MQTT_QOS;
+		pub_opts.retain = MQTT_RETAIN;
+		
+		// todo publish an online message
 		
 	} else if(ev == MG_EV_MQTT_MSG) {							   /* an MQTT message received from broker */
 		
+		struct mg_mqtt_message* recvd_payload = (struct mg_mqtt_message*) ev_data;
+		
+		MG_INFO((										/* debug received message */
+			"%lu received %.*s <- %.*s",
+			c->id,
+			(int) recvd_payload->data.len,
+			recvd_payload->data.buf,
+			recvd_payload->topic.len,
+			recvd_payload->topic.buf
+		));
+		
+		if (mg_match(recvd_payload->topic, mg_str(COMMANDS_TOPIC), NULL)) {
+			// todo -> decode message	
+		}
+				
+		
+	} else if(ev == MG_EV_CLOSE) {
+		MG_INFO(("%lu closed", c->id));
+		s_conn = NULL;
+		
+		mqtt_open = false;
 	}
 }
 
@@ -50,5 +84,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 * @param arg pointer to any function variable
 */
 static void mqtt_timer(void* arg) {
+	
+	
 	
 }

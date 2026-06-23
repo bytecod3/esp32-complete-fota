@@ -15,6 +15,7 @@ static const char* MQTT_PASSWORD = "";
 static const char* COMMANDS_TOPIC = "ota_broker/commands";
 static const char* DATA_TOPIC = "ota_broker/data";
 
-#define MQTT_QOS 	1			/* at least once */
+#define MQTT_QOS 	(1)			/* at least once */
+#define MQTT_RETAIN (1)			/* retain messages */
 
 #endif /* COMPONENTS_MQTT_INCLUDE_MQTT_SETTINGS_H_ */

@@ -8,8 +8,8 @@
 
 #include <stdio.h>
 #include "mongoose.h"
-#include "mqtt_settings.h"
 
+static struct mg_connection* s_conn;					/* main connection handle */
 
 /**
 * @brief Mongoose MQTT event loop
