@@ -18,4 +18,8 @@ static const char* DATA_TOPIC = "ota_broker/data";
 #define MQTT_QOS 	(1)			/* at least once */
 #define MQTT_RETAIN (1)			/* retain messages */
 
+static const char* CLIENT_ID = "ESP32_OTA_01";
+#define MQTT_VERSION	(4)
+#define MQTT_CLEAN		(1)
+
 #endif /* COMPONENTS_MQTT_INCLUDE_MQTT_SETTINGS_H_ */

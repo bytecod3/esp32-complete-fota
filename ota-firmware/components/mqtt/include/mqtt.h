@@ -9,8 +9,20 @@
 #include <stdio.h>
 #include "mongoose.h"
 
-static struct mg_connection* s_conn;					/* main connection handle */
+static struct mg_connection* s_conn;				/* connection handle */					/* main connection handle */
+uint8_t mqtt_open;									/* keep track of  if the panel is open and by who */
 
+
+
+/**
+* @brief find MQTT next topic
+*/
+static size_t mg_mqtt_next_topic(struct mg_mqtt_message *msg,struct mg_str *topic, uint8_t *qos, size_t pos);
+					
+/**
+* @brief
+*/
+			 
 /**
 * @brief Mongoose MQTT event loop
 */

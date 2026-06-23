@@ -16,24 +16,22 @@
 * @param ev_data pointer to data passed to the event loop
 */
 static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
-	if (ev == MG_EV_OPEN) {										  /* creation of new mg connectino object*/
+	if (ev == MG_EV_OPEN) {										  		/* creation of new mg connectino object*/
 		MG_INFO(("%lu created", c->id));
 		
-	} else if(ev == MG_EV_ERROR) {								  /* on any connection error */
+	} else if(ev == MG_EV_ERROR) {								  		/* on any connection error */
 		MG_EV_ERROR(("%lu error %s", c->id, (char*) ev_data));
 		
-	} else if(ev == MG_EV_TLS_HS) {								   /* TLS handshake event */
+	} else if(ev == MG_EV_TLS_HS) {								   		/* TLS handshake event */
 		MG_INFO(("%s\r\n", "TLS handshake complete"));
 		
-	} else if(ev == MG_EV_MQTT_OPEN) {								/* MQTT connection has been established */
+	} else if(ev == MG_EV_MQTT_OPEN) {									/* MQTT connection has been established */
 		MG_INFO(("%lu connected to %s\r\n", c->id, MQTT_HOST));
 		
-		/* subscription and publishing topics */
-		struct mg_str sub_t = mg_str(COMMANDS_TOPIC);
+		struct mg_str sub_t = mg_str(COMMANDS_TOPIC);				/* subscription and publishing topics */
 		struct mg_str pub_t = mg_str(DATA_TOPIC);
 		
-		/* subscription options */
-		struct mg_mqtt_opts sub_opts;
+		struct mg_mqtt_opts sub_opts;									/* subscription options */
 		memset(&sub_opts, 0, sizeof(sub_opts));
 		sub_opts.topic = sub_t;
 		sub_opts.qos = MQTT_QOS;
@@ -84,7 +82,55 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 * @param arg pointer to any function variable
 */
 static void mqtt_timer(void* arg) {
+	struct mg_mgr* mgr = (struct mg_mgr*) arg;					/** starts all the networking resources */
 	
+	struct mg_mqtt_opts opts = {
+		.client_id = mg_str(MQTT_CLIENT_ID),
+		.version = MQTT_VERSION,
+		.clean = MQTT_CLEAN
+		
+	 };
 	
+	 if (s_conn == NULL) {
+		s_conn = mg_mqtt_connect(mgr, MQTT_HOST, &opts, mqtt_event_handler, NULL);
+	 }
 	
 }
+
+
+/**
+* @brief publishes data to broker
+*/
+static void mqtt_data_publish(void* arg);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
