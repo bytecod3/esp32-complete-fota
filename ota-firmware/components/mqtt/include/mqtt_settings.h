@@ -1,0 +1,20 @@
+/*
+ * mqtt_settings.h
+ *
+ *  Created on: Jun 23, 2026
+ *      Author: edwin
+ */
+
+#ifndef COMPONENTS_MQTT_INCLUDE_MQTT_SETTINGS_H_
+#define COMPONENTS_MQTT_INCLUDE_MQTT_SETTINGS_H_
+
+static const char* MQTT_HOST = "";
+static const char* MQTT_USERNAME = "";
+static const char* MQTT_PASSWORD = "";
+
+static const char* COMMANDS_TOPIC = "ota_broker/commands";
+static const char* DATA_TOPIC = "ota_broker/data";
+
+#define MQTT_QOS 	1			/* at least once */
+
+#endif /* COMPONENTS_MQTT_INCLUDE_MQTT_SETTINGS_H_ */
