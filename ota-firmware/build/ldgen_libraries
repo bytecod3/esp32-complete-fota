@@ -199,5 +199,9 @@
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/rt/librt.a
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/spiffs/libspiffs.a
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/libmongoose.a
-/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/libmain.a
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mqtt/libmqtt.a
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/libmongoose.a
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/wifi_connection/libwifi_connection.a
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/libmain.a
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mqtt/libmqtt.a
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/wifi_connection/libwifi_connection.a

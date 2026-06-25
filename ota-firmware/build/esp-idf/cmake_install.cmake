@@ -724,6 +724,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mqtt/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/wifi_connection/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/cmake_install.cmake")
 endif()
 

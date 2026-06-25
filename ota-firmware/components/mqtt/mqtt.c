@@ -20,7 +20,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		MG_INFO(("%lu created", c->id));
 		
 	} else if(ev == MG_EV_ERROR) {								  		/* on any connection error */
-		MG_EV_ERROR(("%lu error %s", c->id, (char*) ev_data));
+		MG_ERROR(("%lu error %s", c->id, (char*) ev_data));
 		
 	} else if(ev == MG_EV_TLS_HS) {								   		/* TLS handshake event */
 		MG_INFO(("%s\r\n", "TLS handshake complete"));
@@ -30,6 +30,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		
 		struct mg_str sub_t = mg_str(COMMANDS_TOPIC);				/* subscription and publishing topics */
 		struct mg_str pub_t = mg_str(DATA_TOPIC);
+		struct mg_str hello_msg = mg_str("Hello from OTA");
 		
 		struct mg_mqtt_opts sub_opts;									/* subscription options */
 		memset(&sub_opts, 0, sizeof(sub_opts));
@@ -44,7 +45,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		struct mg_mqtt_opts pub_opts;
 		memset(&pub_opts, 0, sizeof(pub_opts));
 		pub_opts.topic = pub_t;
-		pub_opts.message = data;
+		pub_opts.message = hello_msg;
 		pub_opts.qos = MQTT_QOS;
 		pub_opts.retain = MQTT_RETAIN;
 		

@@ -1,0 +1,12 @@
+Command: ninja all
+[1/9] Performing build step for 'bootloader'
+[1/1] cd /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/bootloader && /home/edwin/.espressif/tools/python/v6.0.1/venv/bin/python /home/edwin/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/bootloader/bootloader.bin
+Bootloader binary size 0x6610 bytes. 0x9f0 bytes (9%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Building C object esp-idf/wifi_connection/CMakeFiles/__idf_wifi_connection.dir/wifi_connection.c.obj
+In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/wifi_connection/wifi_connection.c:6:
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/wifi_connection/include/wifi_connection.h:34:13: warning: 'request_page' declared 'static' but never defined [-Wunused-function]
+   34 | static void request_page(void);
+      |             ^~~~~~~~~~~~
+[4/9] Linking C static library esp-idf/wifi_connection/libwifi_connection.a
+[5/9] Completed 'bootloader'
