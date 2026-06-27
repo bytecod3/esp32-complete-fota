@@ -41,7 +41,7 @@ static void handle_wifi_connection(void* arg, esp_event_base_t event_base, int32
 * @brief initialize wifi subsystem 
 * NVS partition is used by the WIFI subsystem
 */
-void init_wifi(void) {
+uint8_t init_wifi(void) {
 	if(nvs_flash_init() != ESP_OK) {
 		nvs_flash_erase();
 		nvs_flash_init();
@@ -86,11 +86,12 @@ void init_wifi(void) {
 	
 	if(bits & WIFI_CONNECTED_BIT) {
 		ESP_LOGI(TAG, "WIFI connected");
+		return WIFI_CONNECTED_OK;
 	} else {
 		ESP_LOGI(TAG, "WIFI failed to connect");
+		return WIFI_CONNECTION_FAILED;
 	}
 		
-
 }
 
 

@@ -23,6 +23,12 @@
 #define WIFI_FAILED_BIT 	(BIT1)
 #define MAX_RETRY			(10)		/* number of times to try reconnecting WIFI */
 
+/* WIFI connection status */
+enum {
+	WIFI_CONNECTION_FAILED = 0,
+	WIFI_CONNECTED_OK = 1
+};
+
 extern const char* wifi_ssid;
 extern const char* wifi_psd;
 
@@ -33,6 +39,6 @@ extern const char *TAG;
 
 static void request_page(void);
 static void handle_wifi_connection(void*, esp_event_base_t, int32_t, void*);
-void init_wifi(void);
+uint8_t init_wifi(void);
 
 #endif /* COMPONENTS_MQTT_INCLUDE_WIFI_CONNECTION_H */

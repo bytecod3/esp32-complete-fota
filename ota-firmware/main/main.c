@@ -7,9 +7,15 @@
 
 #define IDLE_TASK_DELAY (10)
 
+/* rtos task prototyes */
+
+
 void app_main(void) {
 	
-	init_wifi();
+	if(init_wifi()) {		/* initialise WIFI subsystem */
+		init_mqtt();		/* initialise MQTT subsystem */
+	}	
+	
 	
     while (true) {
 		vTaskDelay(pdMS_TO_TICKS(IDLE_TASK_DELAY));

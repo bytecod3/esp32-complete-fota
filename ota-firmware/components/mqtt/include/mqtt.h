@@ -7,11 +7,22 @@
 #define MQTT_H
 
 #include <stdio.h>
+#include "freertos/idf_additions.h"
 #include "mongoose.h"
 
-static struct mg_connection* s_conn;				/* connection handle */					/* main connection handle */
-uint8_t mqtt_open;									/* keep track of  if the panel is open and by who */
+#define MQTT_RECONNECT_PERIOD		(3000)
+#define MQTT_DATA_PUBLISH_PERIOD	(2000)
 
+extern TaskHandle_t mqtt_task_handle;
+
+extern const char* MQTT_TAG;
+
+
+static struct mg_connection* s_conn;				/* connection handle */					/* main connection handle */
+extern uint8_t mqtt_open;									/* keep track of  if the panel is open and by who */
+
+/* task prototypes */
+void mqtt_loop_task(void* args);
 
 
 /**
@@ -33,13 +44,23 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data);
 * @brief Timer to reconnect to MQTT if connection goes down. 
 * This function also initiates the first MQTT connection
 */
-static void mqtt_timer(void* arg);
+static void mqtt_reconnect_timer(void* arg);
 
 
 /**
 * @brief publishes data to broker
 */
-static void mqtt_data_publish(void* arg);
+static void mqtt_publish_fn(void* arg);
+
+/*
+* @brief redirect mqtt_log to esp log
+*/
+static void mg_log_redirect(char ch, void* userdata);
+
+/**
+* @brief creates the mqtt loop task that start the mqtt event handler
+*/
+void init_mqtt();
 
 
 #endif

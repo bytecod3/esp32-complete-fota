@@ -8,6 +8,12 @@
 #include "mqtt.h"
 #include "mqtt_settings.h"
 #include "mongoose.h"
+#include "esp_log.h"
+
+TaskHandle_t mqtt_task_handle = NULL;
+
+const char* MQTT_TAG = "MQTT_SYSTEM";
+uint8_t mqtt_open = false;
 
 /**
 * @brief Mongoose MQTT event handler
@@ -82,7 +88,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 * This function also initiates the first MQTT connection
 * @param arg pointer to any function variable
 */
-static void mqtt_timer(void* arg) {
+static void mqtt_reconnect_timer(void* arg) {
 	struct mg_mgr* mgr = (struct mg_mgr*) arg;					/** starts all the networking resources */
 	
 	struct mg_mqtt_opts opts = {
@@ -102,8 +108,60 @@ static void mqtt_timer(void* arg) {
 /**
 * @brief publishes data to broker
 */
-static void mqtt_data_publish(void* arg);
+static void mqtt_publish_fn(void* arg) {
+	ESP_LOGI(MQTT_TAG, "%s", "Dummy data published");
+}
 
+/*
+* @brief redirect mqtt_log to esp log
+*/
+static void mg_log_redirect(char ch, void* userdata) {
+	ESP_LOGI(MQTT_TAG, "%c", ch);
+}
+
+/**
+* @brief task that start the mqtt event handler
+*/
+void mqtt_loop_task(void* args) {
+	struct mg_mgr mgr;				/* event manager */
+	mg_mgr_init(&mgr);				/* initialise the event manager */
+	mg_timer_add(&mgr, MQTT_RECONNECT_PERIOD, MG_TIMER_REPEAT, mqtt_reconnect_timer, &mgr); 	/* reconnection timer */
+	mg_timer_add(&mgr, MQTT_DATA_PUBLISH_PERIOD, MG_TIMER_REPEAT, mqtt_publish_fn, &mgr);	/* data publishing timer */
+	
+	mg_log_set(MG_LL_DEBUG);
+	//mg_log_set_fn(mg_log_redirect, NULL);
+	
+	/* here, MQTT connection is trasnferred to the periodic mqrr_reonnect_timer*/
+	MG_INFO(("Starting on %s ", MQTT_HOST));
+	
+	for(;;) {
+		mg_mgr_poll(&mgr, 1000);					/* call event loop every 1 second */
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}		
+
+}
+
+/**
+* @brief spawn mqtt loop task
+*/
+void init_mqtt() {
+	char* mqtt_task_s = "";
+	
+	if(xTaskCreate(
+		mqtt_loop_task,
+		"mqtt_loop_task",
+		2048,
+		NULL,
+		1,
+		&mqtt_task_handle
+	) == pdPASS) {
+		mqtt_task_s = "created mqtt_loop_task OK";
+	} else {
+		mqtt_task_s = "";
+	}
+	
+	ESP_LOGI(MQTT_TAG,"%s", mqtt_task_s);
+}
 
 
 
