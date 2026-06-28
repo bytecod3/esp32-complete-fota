@@ -7,6 +7,7 @@
 #include <string.h>
 #include "mqtt.h"
 #include "mqtt_settings.h"
+#include "mqtt_secrets.h"
 #include "mongoose.h"
 #include "esp_log.h"
 
@@ -30,6 +31,13 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		
 	} else if(ev == MG_EV_TLS_HS) {								   		/* TLS handshake event */
 		MG_INFO(("%s\r\n", "TLS handshake complete"));
+		
+		struct mg_tls_opts tls_opts;
+		tls_opts.ca = mg_str();
+		tls_opts.name = mg_str(MQTT_HOST);
+		
+		
+		
 		
 	} else if(ev == MG_EV_MQTT_OPEN) {									/* MQTT connection has been established */
 		MG_INFO(("%lu connected to %s\r\n", c->id, MQTT_HOST));
