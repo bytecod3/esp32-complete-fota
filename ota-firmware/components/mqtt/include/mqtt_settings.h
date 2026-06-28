@@ -20,5 +20,4 @@ static const char* MQTT_CLIENT_ID = "ESP32_OTA_01";
 #define MQTT_CLEAN		(1)
 
 
-
 #endif /* COMPONENTS_MQTT_INCLUDE_MQTT_SETTINGS_H_ */

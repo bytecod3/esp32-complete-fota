@@ -6,5 +6,6 @@ idf_component_register(
     INCLUDE_DIRS        # optional, add here public include directories
     PRIV_INCLUDE_DIRS   # optional, add here private include directories
     REQUIRES            mongoose mqtt wifi_connection
-    PRIV_REQUIRES       # optional, list the private requirements
-)
+    PRIV_REQUIRES       # optional, list the private requirements	
+    
+   )
