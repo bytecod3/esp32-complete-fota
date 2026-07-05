@@ -64,7 +64,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		
 		struct mg_tls_opts tls_opts = {0};
 		tls_opts.ca = mg_str(root_ca);
-		tls_opts.name = mg_str(MQTT_HOST); /* without TLS port */
+		tls_opts.name = mg_str(MQTT_HOST); 							/* without TLS port */
 		
 		mg_tls_init(c, &tls_opts);
 	
@@ -158,7 +158,21 @@ static void mqtt_reconnect_timer(void* arg) {
 * @brief publishes data to broker
 */
 static void mqtt_publish_fn(void* arg) {
-	ESP_LOGI(MQTT_TAG, "%s", "Dummy data published");
+	
+	if(s_conn == NULL) {
+		ESP_LOGI(MQTT_TAG, "%s", "s_conn is inactive");
+	} else {
+		struct mg_mqtt_opts pub_opts;
+		pub_opts.topic = mg_str_s(DATA_TOPIC);
+		pub_opts.message = mg_str("{\"msg\":\"This is OTA\"}");
+		pub_opts.qos = 0;
+		mg_mqtt_pub(s_conn, &pub_opts);
+		
+		ESP_LOGI(MQTT_TAG, "%s", "Dummy data published");
+		
+	}
+	
+	
 }
 
 /*
@@ -174,8 +188,20 @@ static void mg_log_redirect(char ch, void* userdata) {
 void mqtt_loop_task(void* args) {
 	struct mg_mgr mgr;				/* event manager */
 	mg_mgr_init(&mgr);				/* initialise the event manager */
-	mg_timer_add(&mgr, MQTT_RECONNECT_PERIOD, MG_TIMER_REPEAT, mqtt_reconnect_timer, &mgr); 	/* reconnection timer */
-	mg_timer_add(&mgr, MQTT_DATA_PUBLISH_PERIOD, MG_TIMER_REPEAT, mqtt_publish_fn, &mgr);	/* data publishing timer */
+	mg_timer_add(
+		&mgr, 
+		MQTT_RECONNECT_PERIOD, 
+		MG_TIMER_REPEAT, 
+		mqtt_reconnect_timer, 
+		&mgr); 	/* reconnection timer */
+		
+		
+	mg_timer_add(
+		&mgr, 
+		MQTT_DATA_PUBLISH_PERIOD, 
+		MG_TIMER_REPEAT, 
+		mqtt_publish_fn, 
+		&mgr);	/* data publishing timer */
 	
 	mg_log_set(MG_LL_DEBUG);
 	//mg_log_set_fn(mg_log_redirect, NULL);
@@ -199,7 +225,7 @@ void init_mqtt() {
 	if(xTaskCreate(
 		mqtt_loop_task,
 		"mqtt_loop_task",
-		2048,
+		8000,
 		NULL,
 		1,
 		&mqtt_task_handle
