@@ -98,7 +98,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		pub_opts.qos = MQTT_QOS;
 		pub_opts.retain = MQTT_RETAIN;
 		
-		// todo publish an online message
+		mg_mqtt_pub(c, &pub_opts);
 		
 	} else if(ev == MG_EV_MQTT_MSG) {							   /* an MQTT message received from broker */
 		
