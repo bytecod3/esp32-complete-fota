@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\MqttController;
+use PhpMqtt\Client\Facades\MQTT;
 
 class FileUploadController extends Controller
 {
     public function store(Request $request) {
 
-        // max file size: 10MB
-        // todo:add bin file, elf and hex
+        $mqtt = new MqttController();
+
         $request->validate([
            'bin_file' => 'required|file|max:10240',
         ]);
@@ -17,9 +19,27 @@ class FileUploadController extends Controller
         $file = $request->file('bin_file');
         $filename = time().'_'.$file->getClientOriginalName();
 
+        // extract metadata
+        $firmware_size = $request->file('bin_file')->getSize();
+        $version = $request->input('version');
+        $device_id = $request->input('device_id');
+
+        // serialize
+        $json = [
+            'device_id' => $device_id,
+            'version'  => $version,
+            'size'     => $firmware_size,
+            'filename' => $filename
+        ];
+
+        $firmware_metadata = json_encode($json);
+
+        // publish metadata to device
+        $mqtt->publish_msg($firmware_metadata);
+
         // store file in storage/app/bin_files directory
         $file->storeAs('bin_files', $filename, 'public');
-        // dd('Upload completed');
+
         return redirect()->back()->with('success', 'File uploaded successfully');
     }
 }

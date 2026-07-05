@@ -21,35 +21,34 @@
 <div class="flex items-center justify-center w-full">
     <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
         <div class="text-[13px]">
-            <div class="items-center" >
+            <div class="items-start" >
                 <p class="text-blue-500 font-bold text-center text-[20px]">ESP32 FOTA Demo</p>
             </div>
 
             {{-- BIN file upload form --}}
             <form action="{{ route('upload.store') }}" method="POST" enctype="multipart/form-data" >
                 @csrf
-                <div class="items-center text-center border border-blue-100">
-                    <ul class=" m-2 p-[4px]">
-                        <li class="m-2">
-                            <label>Select bin file: </label>
-                            <input class="p-[2px] border border-2px border-green-300" type="file" name="bin_file" id="bin_file_input" placeholder="bin file">
-                        </li>
+                <div class=" p-1 grid grid-cols-2 gap-x-4 w-full border border-blue-100">
+                        <label class="p-1 m-2">Bin file: </label>
+                        <input class="p-[2px] m-2  border border-2px border-green-300" type="file" name="bin_file" id="bin_file_input" placeholder="bin file">
 
-                        <li class="m-2">
-                            <label>Mode: </label>
-                            <select id="mode" name="mode" class="p-[2px] border border-2px border-green-300">
-                                <option value="immediate">Immediate</option>
-                                <option value="scheduled">Scheduled</option>
-                            </select>
-                        </li>
+                        <label class="p-1 m-2">Version: </label>
+                        <input class="p-[2px] m-2  border border-2px border-green-300" type="number" step="0.01" name="version" id="version_input" placeholder="version">
 
-                        <li class="m-2 mt-10">
-                            <button class="bg-cyan-600 font-bold p-2 m-2 border border-2 border-cyan-500 radius-3 "  type="submit">Upload</button>
-                        </li>
+                        <label class="p-1 m-2">Device ID: </label>
+                        <input class="p-[2px] m-2  border border-2px border-green-300" type="text" name="device_id" id="device_id_input" placeholder="Device ID">
 
-                        <div>
+                        <label class="p-1 m-2">Mode: </label>
+                        <select id="mode" name="mode" class=" m-2 p-[2px] border border-2px border-green-300">
+                            <option value="immediate">Immediate</option>
+                            <option value="scheduled">Scheduled</option>
+                        </select>
+
+                        <button class="bg-cyan-600 font-bold p-2 m-2 border border-2 border-cyan-500 radius-3 "  type="submit">Upload</button>
+
+                        <div class="p-1 m-2">
                             @if(session('success'))
-                                <div class="alert alert-success">
+                                <div class="alert mb-4 rounded-lg border border-green-300 bg-green-100 px-4 py-3 text-green-800">
                                     {{session('success')}}
                                 </div>
                             @endif

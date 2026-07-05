@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileUploadController;
 
+// home page route
 Route::get('/', function () {
     return view('home');
 });

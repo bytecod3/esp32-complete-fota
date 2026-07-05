@@ -19,4 +19,13 @@ class MqttController extends Controller
             'status'=>'message published'
         ]);
     }
+
+    public function publish_msg($msg) {
+        $topic = "ota_broker/commands";
+
+        $mqtt = MQTT::connection();
+        $mqtt->publish($topic, $msg);
+        $mqtt->disconnect();
+
+    }
 }
