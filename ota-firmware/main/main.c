@@ -10,6 +10,8 @@
 /* RTOS task prototypes */
 void app_main(void) {
 	
+	init_nvs();		/* initialise NVS storage */
+	
 	if(init_wifi()) {		/* initialise WIFI subsystem */
 		init_mqtt();		/* initialise MQTT subsystem */
 	}	

@@ -62,5 +62,10 @@ static void mg_log_redirect(char ch, void* userdata);
 */
 void init_mqtt();
 
+/**
+* initialise NVS
+*/
+void init_nvs();
+
 
 #endif

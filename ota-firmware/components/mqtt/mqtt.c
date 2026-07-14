@@ -3,13 +3,17 @@
 * @author Edwin M.
 */
 
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include "mqtt.h"
+#include "esp_err.h"
 #include "mqtt_settings.h"
 #include "mqtt_secrets.h"
 #include "mongoose.h"
 #include "esp_log.h"
+#include "nvs_flash.h"
+#include "nvs.h"
 
 TaskHandle_t mqtt_task_handle = NULL;
 
@@ -49,6 +53,14 @@ static const char* root_ca = "-----BEGIN CERTIFICATE-----\n"
 "emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=\n"
 "-----END CERTIFICATE-----\n";
 
+
+/*==================OTA variables ===================*/
+static const char* device_id = "C001";
+float firmware_version = 0;
+float firmware_size_bytes = 0;
+static char* firmware_filename = "";
+
+/*========end of OTA variables=====================*/
 
 /**
 * @brief Mongoose MQTT event handler
@@ -113,8 +125,10 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 			recvd_payload->topic.buf
 		));
 		
-		if (mg_match(recvd_payload->topic, mg_str(COMMANDS_TOPIC), NULL)) {
-			// todo -> decode message	
+		if (mg_match(recvd_payload->topic, mg_str(OTA_TOPIC), NULL)) {
+			
+			
+			
 		}
 				
 		
@@ -216,11 +230,65 @@ void mqtt_loop_task(void* args) {
 
 }
 
+void init_nvs() {
+	esp_err_t err = nvs_flash_init();
+	if(err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+		ESP_ERROR_CHECK(nvs_flash_erase());
+		err = nvs_flash_init();
+	}
+	
+	ESP_ERROR_CHECK(err);
+	
+	// open NVS handle 
+	ESP_LOGI(MQTT_TAG, "\nOpening Non-volative storage handle");
+	nvs_handle_t my_handle;
+	
+	err = nvs_open("storage", NVS_READWRITE, &my_handle);
+	if(err != ESP_OK) {
+		ESP_LOGE(MQTT_TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+		return;
+	}
+	
+	
+	// store an read an integer value 
+	int32_t counter = 42;
+	ESP_LOGI(MQTT_TAG, "\nWriting counter to NVS");
+	err = nvs_set_i32(my_handle, "counter", counter);
+	if(err != ESP_OK) {
+		ESP_LOGE(MQTT_TAG, "Failed to write counter");
+	}
+	
+	// read back the stored value 
+	int32_t read_counter = 0;
+	ESP_LOGI(MQTT_TAG, "\nReading value from NVS");
+	err = nvs_get_i32(my_handle, "counter", &read_counter);
+	
+	switch (err) {
+		case ESP_OK:
+			ESP_LOGI(MQTT_TAG, "Read counter = %" PRIu32, read_counter);
+			break;
+		
+		case ESP_ERR_NVS_NOT_FOUND:
+			ESP_LOGW(MQTT_TAG, "The value is not initialized yet");
+			break;
+		
+		default:
+			ESP_LOGE(MQTT_TAG, "Error (%s) reading", esp_err_to_name(err));
+	
+	}
+	
+	
+}
+
+
 /**
 * @brief spawn mqtt loop task
 */
 void init_mqtt() {
 	char* mqtt_task_s = "";
+	
+	/* initialise NVS storage */
+	
 	
 	if(xTaskCreate(
 		mqtt_loop_task,
@@ -237,7 +305,6 @@ void init_mqtt() {
 	
 	ESP_LOGI(MQTT_TAG,"%s", mqtt_task_s);
 }
-
 
 
 

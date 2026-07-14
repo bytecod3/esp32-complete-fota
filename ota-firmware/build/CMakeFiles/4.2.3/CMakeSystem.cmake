@@ -1,6 +1,6 @@
-set(CMAKE_HOST_SYSTEM "Linux-7.0.0-22-generic")
+set(CMAKE_HOST_SYSTEM "Linux-7.0.0-27-generic")
 set(CMAKE_HOST_SYSTEM_NAME "Linux")
-set(CMAKE_HOST_SYSTEM_VERSION "7.0.0-22-generic")
+set(CMAKE_HOST_SYSTEM_VERSION "7.0.0-27-generic")
 set(CMAKE_HOST_SYSTEM_PROCESSOR "x86_64")
 
 include("/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/toolchain/toolchain-esp32.cmake")
