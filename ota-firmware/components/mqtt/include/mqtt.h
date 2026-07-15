@@ -14,8 +14,9 @@
 #define MQTT_DATA_PUBLISH_PERIOD	(2000)
 
 extern TaskHandle_t mqtt_task_handle;
-
 extern const char* MQTT_TAG;
+
+extern int fw_version;
 
 
 static struct mg_connection* s_conn;				/* connection handle */					/* main connection handle */

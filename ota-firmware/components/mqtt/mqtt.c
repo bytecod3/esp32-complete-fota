@@ -249,7 +249,6 @@ void init_nvs() {
 		return;
 	}
 	
-	
 	// store an read an integer value 
 	int32_t counter = 42;
 	ESP_LOGI(MQTT_TAG, "\nWriting counter to NVS");
@@ -276,7 +275,6 @@ void init_nvs() {
 			ESP_LOGE(MQTT_TAG, "Error (%s) reading", esp_err_to_name(err));
 	
 	}
-	
 	
 }
 
