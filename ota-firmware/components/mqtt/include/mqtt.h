@@ -16,9 +16,13 @@
 extern TaskHandle_t mqtt_task_handle;
 extern const char* MQTT_TAG;
 
-extern int fw_version;
+/*==================OTA variables ===================*/
+extern const char* device_id;
+extern float firmware_version;
+extern float firmware_size_bytes;
+extern char* firmware_filename;
 
-
+/*========end of OTA variables=====================*/
 static struct mg_connection* s_conn;				/* connection handle */					/* main connection handle */
 extern uint8_t mqtt_open;									/* keep track of  if the panel is open and by who */
 

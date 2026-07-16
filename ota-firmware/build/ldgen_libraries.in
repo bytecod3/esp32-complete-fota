@@ -199,8 +199,10 @@ $<TARGET_FILE:idf::perfmon>
 $<TARGET_FILE:idf::rt>
 $<TARGET_FILE:idf::spiffs>
 $<TARGET_FILE:idf::mongoose>
+$<TARGET_FILE:idf::cJSON>
 $<TARGET_FILE:idf::mqtt>
 $<TARGET_FILE:__idf_mongoose>
+$<TARGET_FILE:__idf_cJSON>
 $<TARGET_FILE:idf::wifi_connection>
 $<TARGET_FILE:idf::main>
 $<TARGET_FILE:__idf_mqtt>

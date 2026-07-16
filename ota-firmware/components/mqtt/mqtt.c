@@ -14,6 +14,7 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "nvs.h"
+#include "cJSON.h"
 
 TaskHandle_t mqtt_task_handle = NULL;
 
@@ -55,10 +56,10 @@ static const char* root_ca = "-----BEGIN CERTIFICATE-----\n"
 
 
 /*==================OTA variables ===================*/
-static const char* device_id = "C001";
+const char* device_id = "C001";
 float firmware_version = 0;
 float firmware_size_bytes = 0;
-static char* firmware_filename = "";
+char* firmware_filename = "";
 
 /*========end of OTA variables=====================*/
 
@@ -126,7 +127,10 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		));
 		
 		if (mg_match(recvd_payload->topic, mg_str(OTA_TOPIC), NULL)) {
+			// fetch the firmware meta-data
 			
+			
+//			firmware_version = strtof(version);
 			
 			
 		}
@@ -167,7 +171,6 @@ static void mqtt_reconnect_timer(void* arg) {
 	
 }
 
-
 /**
 * @brief publishes data to broker
 */
@@ -185,7 +188,6 @@ static void mqtt_publish_fn(void* arg) {
 		ESP_LOGI(MQTT_TAG, "%s", "Dummy data published");
 		
 	}
-	
 	
 }
 

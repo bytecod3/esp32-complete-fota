@@ -158,6 +158,7 @@
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/spiffs/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/ulp/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mongoose/cmake_install.cmake",
+		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/cJSON/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/mqtt/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/wifi_connection/cmake_install.cmake",
 		"/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/esp-idf/main/cmake_install.cmake"

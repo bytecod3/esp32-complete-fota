@@ -1,5 +1,5 @@
 idf_component_register(
 	SRCS mqtt.c
 	INCLUDE_DIRS include
-	REQUIRES mongoose nvs_flash
+	REQUIRES mongoose nvs_flash cJSON
 )

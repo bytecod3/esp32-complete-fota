@@ -10,7 +10,7 @@
 
 
 static const char* COMMANDS_TOPIC = "ota_broker/commands";
-static const char* OTA_TOPIC = "ota_broker/updates";
+static const char* OTA_TOPIC = "ota_broker/update";
 static const char* DATA_TOPIC = "ota_broker/data";
 static const char* MQTT_CLIENT_ID = "ESP32_OTA_01";
 

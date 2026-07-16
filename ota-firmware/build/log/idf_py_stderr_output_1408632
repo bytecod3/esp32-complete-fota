@@ -1,0 +1,22 @@
+Command: ninja all
+CMake Deprecation Warning at CMakeLists.txt:3 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Error at /home/edwin/.espressif/v6.0.1/esp-idf/tools/cmake/build.cmake:380 (message):
+  Failed to resolve component 'esspressif__cjson' required by component
+  'mqtt': unknown name.
+Call Stack (most recent call first):
+  /home/edwin/.espressif/v6.0.1/esp-idf/tools/cmake/build.cmake:423 (__build_resolve_and_add_req)
+  /home/edwin/.espressif/v6.0.1/esp-idf/tools/cmake/build.cmake:424 (__build_expand_requirements)
+  /home/edwin/.espressif/v6.0.1/esp-idf/tools/cmake/build.cmake:753 (__build_expand_requirements)
+  /home/edwin/.espressif/v6.0.1/esp-idf/tools/cmake/project.cmake:773 (idf_build_process)
+  CMakeLists.txt:6 (project)
+
+
+ninja: error: rebuilding 'build.ninja': subcommand failed
