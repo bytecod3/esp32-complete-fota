@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include "stdlib.h" // for strtof
 #include <string.h>
 #include "mqtt.h"
 #include "esp_err.h"
@@ -57,7 +58,7 @@ static const char* root_ca = "-----BEGIN CERTIFICATE-----\n"
 
 /*==================OTA variables ===================*/
 const char* device_id = "C001";
-float firmware_version = 0;
+float firmware_version = 1.0;
 float firmware_size_bytes = 0;
 char* firmware_filename = "";
 
@@ -90,7 +91,9 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 	} else if(ev == MG_EV_MQTT_OPEN) {									/* MQTT connection has been established */
 		MG_INFO(("%lu connected to %s\r\n", c->id, MQTT_HOST));
 		
-		struct mg_str sub_t = mg_str(COMMANDS_TOPIC);				/* subscription and publishing topics */
+		//struct mg_str sub_t = mg_str(COMMANDS_TOPIC);				/* subscription and publishing topics */
+		struct mg_str sub_t = mg_str(OTA_TOPIC);					// todo subscribe to multiple topics 
+		
 		struct mg_str pub_t = mg_str(DATA_TOPIC);
 		struct mg_str hello_msg = mg_str("Hello from OTA");
 		
@@ -127,10 +130,35 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		));
 		
 		if (mg_match(recvd_payload->topic, mg_str(OTA_TOPIC), NULL)) {
-			// fetch the firmware meta-data
+			float _ota_fw_ver = 0.0;
+			/// fetch the firmware meta-data
+			cJSON* fw_metadata_obj = cJSON_CreateObject();
 			
-			
-//			firmware_version = strtof(version);
+			if (fw_metadata_obj == NULL) {
+				ESP_LOGE(MQTT_TAG, "Could not create CJSON object");
+				cJSON_Delete(fw_metadata_obj);
+			} else {
+				float fw_ota_version = 0.0;
+				cJSON* fw_metadata = cJSON_Parse(recvd_payload->data.buf);
+				
+				cJSON* ver = cJSON_GetObjectItemCaseSensitive(fw_metadata, "version"); // fetch firmware version
+				
+				if(!cJSON_IsString(ver)) {
+					ESP_LOGE(MQTT_TAG, "Invalid firmware version"); 	// log this to event file
+					cJSON_Delete(fw_metadata_obj); 					// free memory
+				} else {
+					_ota_fw_ver = strtof(cJSON_GetStringValue(ver), NULL);
+					ESP_LOGI(MQTT_TAG, "Received firmware version OK: %f\r\n", _ota_fw_ver);
+					
+					cJSON_Delete(fw_metadata_obj);
+				}
+				
+				 																			// fetch firmware size 
+				
+				
+				
+			}
+			 
 			
 			
 		}
@@ -218,11 +246,11 @@ void mqtt_loop_task(void* args) {
 		MG_TIMER_REPEAT, 
 		mqtt_publish_fn, 
 		&mgr);	/* data publishing timer */
-	
+		
 	mg_log_set(MG_LL_DEBUG);
 	//mg_log_set_fn(mg_log_redirect, NULL);
 	
-	/* here, MQTT connection is trasnferred to the periodic mqrr_reonnect_timer*/
+	/* here, MQTT connection is transferred to the periodic mqrr_reonnect_timer*/
 	MG_INFO(("Starting on %s ", MQTT_HOST));
 	
 	for(;;) {

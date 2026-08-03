@@ -6,31 +6,34 @@ The following steps are built on ubuntu-linux:
 
 #### Ubuntu-Linux
 ##### activate venv
-```c source ~/.espressif/tools/activate_idf_v6.0.1.sh```
+```source ~/.espressif/tools/activate_idf_v6.0.1.sh```
 
 ##### cd into target project root
-```c cd ~/workspace/project_name```
+```cd ~/workspace/project_name```
 
 ##### set target 
-```c idf.py set-target esp32```
+```idf.py set-target esp32```
 
 ##### to config - optional 
-```c idf.py menuconfig```
+```idf.py menuconfig```
 
 ##### build 
-```c idf.py build```
+```idf.py build```
 
 #### flash 
 ##### view serial port number (linux)
-```c ls /dev/ttyUSB*```
+```ls /dev/ttyUSB*```
 
 ##### flash 
-```c idf.py -p /dev/ttyUSB0 flash ```
+```idf.py -p /dev/ttyUSB0 flash ```
 
 ##### monitor serial 
-```c idf.py monitor```
+```idf.py monitor```
 
 #### Creating components
 TO create a components folder on root and add a component
-```c idf.py create-component -C components component_name```
+```idf.py create-component -C components component_name```
 
+
+## Adding cJSON lib
+```idf.py add-dependency "espressif/cjson^1.7.19~2" ```

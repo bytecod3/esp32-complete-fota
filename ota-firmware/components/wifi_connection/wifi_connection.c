@@ -63,7 +63,7 @@ uint8_t init_wifi(void) {
 		},
 	};
 	
-	/* update wifi credentialsz, since they are secret variables, I copy them here */
+	/* update wifi credentials, since they are secret variables, I copy them here */
 	strcpy((char *) wifi_config.sta.ssid, wifi_ssid);
 	strcpy((char *) wifi_config.sta.password, wifi_psd);
 	

@@ -21,7 +21,7 @@ class MqttController extends Controller
     }
 
     public function publish_msg($msg) {
-        $topic = "ota_broker/commands";
+        $topic = "ota_broker/update";
 
         $mqtt = MQTT::connection();
         $mqtt->publish($topic, $msg);
