@@ -141,7 +141,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 				float fw_ota_version = 0.0;
 				cJSON* fw_metadata = cJSON_Parse(recvd_payload->data.buf);
 				
-				cJSON* ver = cJSON_GetObjectItemCaseSensitive(fw_metadata, "version"); // fetch firmware version
+				cJSON* ver = cJSON_GetObjectItemCaseSensitive(fw_metadata, "version"); // FETCH FORMWARE VERSION
 				
 				if(!cJSON_IsString(ver)) {
 					ESP_LOGE(MQTT_TAG, "Invalid firmware version"); 	// log this to event file
@@ -153,7 +153,12 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 					cJSON_Delete(fw_metadata_obj);
 				}
 				
-				 																			// fetch firmware size 
+				 																						// FETCH FORMWARE SIZE 
+																										
+																										// FETCH FIRMWARE BIN FILENAME
+																										
+																										// FETCH UPDATE TIME 
+																										
 				
 				
 				
