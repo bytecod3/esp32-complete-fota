@@ -3,9 +3,11 @@
 * @author Edwin M.
 */
 
+#include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
 #include "stdlib.h" // for strtof
+#include <errno.h>
 #include <string.h>
 #include "mqtt.h"
 #include "esp_err.h"
@@ -131,6 +133,10 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		
 		if (mg_match(recvd_payload->topic, mg_str(OTA_TOPIC), NULL)) {
 			float _ota_fw_ver = 0.0;
+			int _ota_fw_size = 0;
+			char _ota_fw_bin_name[32];
+			char* _ota_fw_http_url = "";
+			
 			/// fetch the firmware meta-data
 			cJSON* fw_metadata_obj = cJSON_CreateObject();
 			
@@ -139,28 +145,70 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 				cJSON_Delete(fw_metadata_obj);
 			} else {
 				float fw_ota_version = 0.0;
+				
 				cJSON* fw_metadata = cJSON_Parse(recvd_payload->data.buf);
 				
-				cJSON* ver = cJSON_GetObjectItemCaseSensitive(fw_metadata, "version"); // FETCH FORMWARE VERSION
-				
+				/////////////////////////////// FETCH FIRMWARE VERSION
+				cJSON* ver = cJSON_GetObjectItemCaseSensitive(fw_metadata, "version"); 
 				if(!cJSON_IsString(ver)) {
-					ESP_LOGE(MQTT_TAG, "Invalid firmware version"); 	// log this to event file
+					ESP_LOGE(MQTT_TAG, "Invalid firmware version"); 	// todo: log this to event file
 					cJSON_Delete(fw_metadata_obj); 					// free memory
 				} else {
 					_ota_fw_ver = strtof(cJSON_GetStringValue(ver), NULL);
 					ESP_LOGI(MQTT_TAG, "Received firmware version OK: %f\r\n", _ota_fw_ver);
 					
-					cJSON_Delete(fw_metadata_obj);
+					
 				}
 				
-				 																						// FETCH FORMWARE SIZE 
-																										
-																										// FETCH FIRMWARE BIN FILENAME
-																										
-																										// FETCH UPDATE TIME 
-																										
+				///////////////////////////////// FETCH FIRMWARE SIZE 
+				cJSON* size = cJSON_GetObjectItemCaseSensitive(fw_metadata, "size");			
+				if(!cJSON_IsNumber(size)){
+					ESP_LOGE(MQTT_TAG, "size cannot be 0");
+					cJSON_Delete(fw_metadata_obj);
+				} else {
+//					errno = 0;
+//					char* endptr;
+//					
+					_ota_fw_size = cJSON_GetNumberValue(size);
+					ESP_LOGI(MQTT_TAG, "Received size: %d\r\n", _ota_fw_size);
+					
+					
+					/// check for size conversion errors 
+//					if(*endptr != '\0') {
+//						ESP_LOGE(MQTT_TAG, "Invalid characters in size ");
+//						cJSON_Delete(fw_metadata_obj);
+//					} else if(errno != 0) {
+//						ESP_LOGE(MQTT_TAG, "Firmware size conversion error");
+//						cJSON_Delete(fw_metadata_obj);
+//						
+//					} else {
+//						ESP_LOGI(MQTT_TAG, "Received size: %d\r\n", _ota_fw_size);
+//						cJSON_Delete(fw_metadata_obj);						
+//					}
 				
+				}																						
 				
+				////////////////////////////// FETCH FIRMWARE BIN FILENAME
+				cJSON* bin_name = cJSON_GetObjectItemCaseSensitive(fw_metadata, "filename");
+				if(!cJSON_IsString(bin_name)) {
+					ESP_LOGE(MQTT_TAG, "Invalid OTA bin name");
+					cJSON_Delete(fw_metadata_obj);
+				} else {
+					char* f_name = cJSON_GetStringValue(bin_name);
+					size_t fname_len = strlen(cJSON_GetStringValue(bin_name));
+					strncpy(_ota_fw_bin_name, f_name, sizeof(_ota_fw_bin_name) - 1);
+					_ota_fw_bin_name[sizeof(_ota_fw_bin_name) - 1] = '\0';
+					ESP_LOGI(MQTT_TAG, "filename size: %d", fname_len);
+					
+					ESP_LOGI(MQTT_TAG, "Received filename: %s\r\n", _ota_fw_bin_name);
+					
+				}
+																		
+																										
+				//////////////////////////////// FETCH UPDATE MODE 
+																										
+				//////////////////////////// Free JSON object 
+				cJSON_Delete(fw_metadata_obj);
 				
 			}
 			 

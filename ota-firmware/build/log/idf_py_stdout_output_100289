@@ -6,21 +6,21 @@ Bootloader binary size 0x6610 bytes. 0x9f0 bytes (9%) free.
 [3/9] Completed 'bootloader'
 [4/9] Building C object esp-idf/mqtt/CMakeFiles/__idf_mqtt.dir/mqtt.c.obj
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c: In function 'mqtt_event_handler':
-/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:141:39: warning: unused variable 'fw_ota_version' [-Wunused-variable]
-  141 |                                 float fw_ota_version = 0.0;
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:147:39: warning: unused variable 'fw_ota_version' [-Wunused-variable]
+  147 |                                 float fw_ota_version = 0.0;
       |                                       ^~~~~~~~~~~~~~
-/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:133:31: warning: variable '_ota_fw_ver' set but not used [-Wunused-but-set-variable]
-  133 |                         float _ota_fw_ver = 0.0;
-      |                               ^~~~~~~~~~~
-In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:10:
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:138:31: warning: unused variable '_ota_fw_http_url' [-Wunused-variable]
+  138 |                         char* _ota_fw_http_url = "";
+      |                               ^~~~~~~~~~~~~~~~
+In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:12:
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h: At top level:
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:36:15: warning: 'mg_mqtt_next_topic' declared 'static' but never defined [-Wunused-function]
    36 | static size_t mg_mqtt_next_topic(struct mg_mqtt_message *msg,struct mg_str *topic, uint8_t *qos, size_t pos);
       |               ^~~~~~~~~~~~~~~~~~
-/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:223:13: warning: 'mg_log_redirect' defined but not used [-Wunused-function]
-  223 | static void mg_log_redirect(char ch, void* userdata) {
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:275:13: warning: 'mg_log_redirect' defined but not used [-Wunused-function]
+  275 | static void mg_log_redirect(char ch, void* userdata) {
       |             ^~~~~~~~~~~~~~~
-In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:12:
+In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:14:
 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt_settings.h:12:20: warning: 'COMMANDS_TOPIC' defined but not used [-Wunused-variable]
    12 | static const char* COMMANDS_TOPIC = "ota_broker/commands";
       |                    ^~~~~~~~~~~~~~
@@ -34,4 +34,4 @@ Merged 3 ELF sections.
 Successfully created ESP32 image.
 Generated /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/app-template.bin
 [9/9] cd /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build && /home/edwin/.espressif/tools/python/v6.0.1/venv/bin/python /home/edwin/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/partition_table/partition-table.bin /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/app-template.bin
-app-template.bin binary size 0xd3540 bytes. Smallest app partition is 0x100000 bytes. 0x2cac0 bytes (17%) free.
+app-template.bin binary size 0xd3750 bytes. Smallest app partition is 0x100000 bytes. 0x2c8b0 bytes (17%) free.

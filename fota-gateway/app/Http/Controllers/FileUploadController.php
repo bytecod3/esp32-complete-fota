@@ -23,13 +23,21 @@ class FileUploadController extends Controller
         $firmware_size = $request->file('bin_file')->getSize();
         $version = $request->input('version');
         $device_id = $request->input('device_id');
+        $mode = $request->input('mode');
+        $time = 0;
+
+        if($mode == "Scheduled") {
+            $time = "2026-06-21T14:30:30Z";
+        } 
 
         // serialize
         $json = [
             'device_id' => $device_id,
             'version'  => $version,
             'size'     => $firmware_size,
-            'filename' => $filename
+            'filename' => $filename,
+            'mode'     => $mode,
+            'time'     => $time
         ];
 
         $firmware_metadata = json_encode($json);
