@@ -135,7 +135,8 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 			float _ota_fw_ver = 0.0;
 			int _ota_fw_size = 0;
 			char _ota_fw_bin_name[32];
-			char* _ota_fw_http_url = "";
+			char _ota_update_mode[32];
+			char _ota_fw_http_url[128];
 			
 			/// fetch the firmware meta-data
 			cJSON* fw_metadata_obj = cJSON_CreateObject();
@@ -206,14 +207,47 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 																		
 																										
 				//////////////////////////////// FETCH UPDATE MODE 
-																										
+				cJSON* update_mode = cJSON_GetObjectItemCaseSensitive(fw_metadata, "mode");
+				if(!cJSON_IsString(update_mode)) {
+					ESP_LOGE(MQTT_TAG, "invalid update mode");
+					cJSON_Delete(fw_metadata_obj);
+				}else {
+					char* updt_mode = cJSON_GetStringValue(update_mode);
+					size_t mode_len = strlen(updt_mode);
+					strncpy(_ota_update_mode, updt_mode, sizeof(_ota_update_mode) -1 );
+					_ota_update_mode[sizeof(_ota_update_mode) - 1] = '\0';
+					ESP_LOGI(MQTT_TAG, "update mode size: %d", mode_len);
+					
+					// if immediate 
+					// extract the URL 
+					// update URL 
+					if(strcmp(updt_mode, "immediate") == 0) {
+						ESP_LOGI(MQTT_TAG, "Update the device immediately");
+						
+						cJSON* url = cJSON_GetObjectItemCaseSensitive(fw_metadata, "url");
+						if(!cJSON_IsString(update_mode)) {
+							ESP_LOGE(MQTT_TAG, "invalid  update url");
+							cJSON_Delete(fw_metadata_obj);
+						} else {
+							char* updt_url = cJSON_GetStringValue(url);
+							size_t url_len = strlen(updt_url);
+							strncpy(_ota_fw_http_url, updt_url, sizeof(_ota_fw_http_url) - 1 );
+							_ota_fw_http_url[sizeof(_ota_fw_http_url) - 1] = '\0';
+							ESP_LOGI(MQTT_TAG, "update url: %s | length: %d", _ota_fw_http_url, url_len);
+						}				
+						
+					} else if(strcmp(updt_mode, "scheduled") == 0) {
+						ESP_LOGI(MQTT_TAG, "Update the device at a scheduled time");
+						// todo: implement scheduled updates
+					}
+					
+				}
+																								
 				//////////////////////////// Free JSON object 
 				cJSON_Delete(fw_metadata_obj);
 				
 			}
 			 
-			
-			
 		}
 				
 		

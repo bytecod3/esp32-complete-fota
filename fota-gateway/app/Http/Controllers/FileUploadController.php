@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\MqttController;
 use PhpMqtt\Client\Facades\MQTT;
+use Illuminate\Support\Facades\Storage;
 
 class FileUploadController extends Controller
 {
@@ -25,6 +26,7 @@ class FileUploadController extends Controller
         $device_id = $request->input('device_id');
         $mode = $request->input('mode');
         $time = 0;
+        $url = Storage::disk('public')->url($filename);
 
         if($mode == "Scheduled") {
             $time = "2026-06-21T14:30:30Z";
@@ -37,7 +39,8 @@ class FileUploadController extends Controller
             'size'     => $firmware_size,
             'filename' => $filename,
             'mode'     => $mode,
-            'time'     => $time
+            'time'     => $time,
+            'url'      => $url
         ];
 
         $firmware_metadata = json_encode($json);
