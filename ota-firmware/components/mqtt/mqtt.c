@@ -9,6 +9,7 @@
 #include "stdlib.h" // for strtof
 #include <errno.h>
 #include <string.h>
+#include <sys/types.h>
 #include "mqtt.h"
 #include "esp_err.h"
 #include "mqtt_settings.h"
@@ -22,6 +23,8 @@
 TaskHandle_t mqtt_task_handle = NULL;
 
 const char* MQTT_TAG = "MQTT_SYSTEM";
+const char* HTTP_TAG = "HTTP_TAG";
+
 uint8_t mqtt_open = false;
 
 /* embedded root CA file todo:use embedtxtfile */
@@ -64,7 +67,60 @@ float firmware_version = 1.0;
 float firmware_size_bytes = 0;
 char* firmware_filename = "";
 
+float _ota_fw_ver = 0.0;
+int _ota_fw_size = 0;
+char _ota_fw_bin_name[32];
+char _ota_update_mode[32];
+char _ota_fw_http_url[128];
+
+static const uint64_t http_conn_timeout = 1500; // HTTP connect timeout in milliseconds
+
 /*========end of OTA variables=====================*/
+
+/**
+HTTP OTA event handler function
+*/ 
+static void http_ota_fn(struct mg_connection* c, int ev, void* ev_data) {
+	
+	
+	if(ev == MG_EV_OPEN) { // connection created, store connect expiration time in c->data
+		
+		*(uint64_t*) c->data = mg_millis() + http_conn_timeout;
+		
+	} else if(ev == MG_EV_POLL) {
+		if(mg_millis() > *(u_int64_t*) c->data && (c->is_connecting || c->is_resolving) ) {
+			mg_error(c, "HTTP connection timeout");
+		}
+		
+	} else if(ev == MG_EV_CONNECT) { // connected  to server, send the get request
+		// send HTTP get 
+		ESP_LOGI(HTTP_TAG, "Connected to HTTP server. Sending HTTP GET request");
+		struct mg_str _ota_http_url = mg_str((_ota_fw_http_url));
+		struct mg_str host = mg_url_host(_ota_fw_http_url);
+		const char* uri = mg_url_uri(_ota_fw_http_url);
+		
+		mg_printf(c, 
+			"GET %.*s HTTP/1.1\r\n"
+			"Host: %.*s\r\n"
+			"Connection: close\r\n"
+			"\r\n",
+			(int)strlen(uri), uri,
+			(int)host.len, host.buf
+		);
+		
+		
+	} else if(ev == MG_EV_HTTP_HDRS) {  // http headers received, start OTA streaming
+		struct mg_http_message *hm = (struct mg_http_message*) ev_data;
+		
+		
+		
+		
+	} else if(ev == MG_EV_ERROR) {				/// todo: close connection on error
+		MG_DEBUG(("HTTPS ERROR"));
+		
+	}
+}
+
 
 /**
 * @brief Mongoose MQTT event handler
@@ -132,11 +188,6 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 		));
 		
 		if (mg_match(recvd_payload->topic, mg_str(OTA_TOPIC), NULL)) {
-			float _ota_fw_ver = 0.0;
-			int _ota_fw_size = 0;
-			char _ota_fw_bin_name[32];
-			char _ota_update_mode[32];
-			char _ota_fw_http_url[128];
 			
 			/// fetch the firmware meta-data
 			cJSON* fw_metadata_obj = cJSON_CreateObject();
@@ -218,9 +269,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 					_ota_update_mode[sizeof(_ota_update_mode) - 1] = '\0';
 					ESP_LOGI(MQTT_TAG, "update mode size: %d", mode_len);
 					
-					// if immediate 
-					// extract the URL 
-					// update URL 
+					////////////////////////////////////// EXTRACT THE UPDATE URL 
 					if(strcmp(updt_mode, "immediate") == 0) {
 						ESP_LOGI(MQTT_TAG, "Update the device immediately");
 						
@@ -234,6 +283,14 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 							strncpy(_ota_fw_http_url, updt_url, sizeof(_ota_fw_http_url) - 1 );
 							_ota_fw_http_url[sizeof(_ota_fw_http_url) - 1] = '\0';
 							ESP_LOGI(MQTT_TAG, "update url: %s | length: %d", _ota_fw_http_url, url_len);
+							
+							// CREATE A NEW HTTP CONNECTION
+							struct mg_mgr http_mgr;
+
+							uint8_t done = 0;
+							mg_http_connect(&http_mgr, _ota_fw_http_url, http_ota_fn, &done);				
+							
+
 						}				
 						
 					} else if(strcmp(updt_mode, "scheduled") == 0) {
