@@ -10,6 +10,7 @@
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/unistd.h>
 #include "mqtt.h"
 #include "esp_err.h"
 #include "mqtt_settings.h"
@@ -79,6 +80,21 @@ struct mg_mgr http_mgr;
 /*========end of OTA variables=====================*/
 
 /**
+* @brief OTA completion callback 
+*/
+static void http_ota_callback(const char *status) {
+//	
+//	if(errmsg == NULL) {
+//		ESP_LOGI(HTTP_TAG, "OTA COMPLETED SUCCESSFULLY.");
+//	} else {
+//		ESP_LOGE(HTTP_TAG, "OTA FAILED: %s", errmsg);
+//	}
+
+	ESP_LOGI(HTTP_TAG, "OTA STATUS: %s", status);
+	
+}
+
+/**
 HTTP OTA event handler function
 */ 
 static void http_ota_fn(struct mg_connection* c, int ev, void* ev_data) {
@@ -111,35 +127,28 @@ static void http_ota_fn(struct mg_connection* c, int ev, void* ev_data) {
 		
 	} else if(ev == MG_EV_HTTP_HDRS) {  // http headers received, start OTA streaming
 		struct mg_http_message *hm = (struct mg_http_message*) ev_data;
-		ESP_LOGI(HTTP_TAG, "========== HTTP MESSAGE ==========");
-
-	    ESP_LOGI(HTTP_TAG, "Method: %.*s",
-	             (int) hm->method.len, hm->method.buf);
-
-	    ESP_LOGI(HTTP_TAG, "URI: %.*s",
-	             (int) hm->uri.len, hm->uri.buf);
-
-	    ESP_LOGI(HTTP_TAG, "Protocol: %.*s",
-	             (int) hm->proto.len, hm->proto.buf);
-
-//	    ESP_LOGI(HTTP_TAG, "Response: %.*s",
-//	             (int) hm->res.len, hm->res.buf);
-//
-//	    ESP_LOGI(HTTP_TAG, "Headers: %.*s",
-//	             (int) hm->headers.len, hm->headers.buf);
-
-	    ESP_LOGI(HTTP_TAG, "Body length: %d",
-	             (int) hm->body.len);
-
-	    ESP_LOGI(HTTP_TAG, "==================================");
-	
 		
+		struct mg_str* content_length = mg_http_get_header(hm, "Content-Length");
+		ESP_LOGI(HTTP_TAG, "content length: %.*s", (int)hm->uri.len, hm->uri.buf );
+
+	}else if(ev == MG_EV_HTTP_MSG) {
+		struct mg_http_message *hm = (struct mg_http_message *) ev_data;
+		
+	    ESP_LOGI(HTTP_TAG,
+	             "HTTP body length: %d",
+	             (int) hm->body.len);
+	
+	    ESP_LOGI(HTTP_TAG,
+	             "HTTP body: %.*s",
+	             (int) hm->body.len,
+	             hm->body.buf);
 		
 	} else if(ev == MG_EV_ERROR) {				/// todo: close connection on error
 		MG_DEBUG(("HTTPS ERROR"));
 		
 	}
 }
+
 
 
 /**
@@ -276,7 +285,7 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 					
 				}
 																		
-																										
+																									
 				//////////////////////////////// FETCH UPDATE MODE 
 				cJSON* update_mode = cJSON_GetObjectItemCaseSensitive(fw_metadata, "mode");
 				if(!cJSON_IsString(update_mode)) {
@@ -304,15 +313,17 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 							_ota_fw_http_url[sizeof(_ota_fw_http_url) - 1] = '\0';
 							ESP_LOGI(MQTT_TAG, "update url: %s | length: %d", _ota_fw_http_url, url_len);
 							
+							
+							
 							// CREATE A NEW HTTP CONNECTION
-							mg_mgr_init(&http_mgr);
-
-							uint8_t done = 0;
+							// the connection is kept alive by the HTTP_LOOP_TASK
+//							mg_mgr_init(&http_mgr);
+//							uint8_t done = 0;
+//							ESP_LOGI(MQTT_TAG, "Creating new HTTP connection");
+//							mg_http_connect(&http_mgr, _ota_fw_http_url, http_ota_fn, &done);		
 							
-							ESP_LOGI(MQTT_TAG, "Creating new HTTP connection");
-							mg_http_connect(&http_mgr, _ota_fw_http_url, http_ota_fn, &done);				
+							mg_ota_url_check(&http_mgr, "http://192.168.100.14:8000/updates/metadata" ,  http_ota_callback);
 							
-
 						}				
 						
 					} else if(strcmp(updt_mode, "scheduled") == 0) {

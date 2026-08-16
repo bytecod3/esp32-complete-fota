@@ -33,3 +33,5 @@ Route::get('/storage/bin_files/{filename}', function($filename) {
 
 });
 
+// returns the metadata for the firmware file
+Route::get('/updates/metadata',  [FileUploadController::class, 'expose_metadata']);
