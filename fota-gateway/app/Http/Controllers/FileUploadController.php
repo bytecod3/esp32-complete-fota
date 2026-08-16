@@ -76,12 +76,14 @@ class FileUploadController extends Controller
             ], 404);
         }
 
-        return response()->json([
-            'version' => $metadata['version'],
-            'size' => $metadata['size'],
-            'url' => $metadata['url']            
-            ])
-        ->header('Content-Length', strlen($metadata_json));
+        // return response()->json([
+        //     'version' => $metadata['version'],
+        //     'size' => $metadata['size'],
+        //     'url' => $metadata['url']            
+        //     ], JSON_UNESCAPED_SLASHES)
+        // ->header('Content-Length', strlen($metadata_json));
+
+        return response()->json($metadata, 200, [], JSON_UNESCAPED_SLASHES);
 
     }
 }
