@@ -6,6 +6,7 @@
 #include <inttypes.h>
 #include <stdint.h>
 #include <stdio.h>
+#include "esp_system.h"
 #include "stdlib.h" // for strtof
 #include <errno.h>
 #include <string.h>
@@ -83,14 +84,15 @@ struct mg_mgr http_mgr;
 * @brief OTA completion callback 
 */
 static void http_ota_callback(const char *status) {
-//	
-//	if(errmsg == NULL) {
-//		ESP_LOGI(HTTP_TAG, "OTA COMPLETED SUCCESSFULLY.");
-//	} else {
-//		ESP_LOGE(HTTP_TAG, "OTA FAILED: %s", errmsg);
-//	}
 
-	ESP_LOGI(HTTP_TAG, "OTA STATUS: %s", status);
+	if(status == NULL) {
+		ESP_LOGI(HTTP_TAG, "OTA success. OTA status: %s", status);
+		
+		// restart ES
+		esp_restart();
+	} else {
+		ESP_LOGI(HTTP_TAG, "OTA failed. OTA STATUS: %s", status);
+	}
 	
 }
 

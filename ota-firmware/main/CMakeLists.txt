@@ -5,7 +5,7 @@ idf_component_register(
     SRCS main.c         # list the source files of this component
     INCLUDE_DIRS        # optional, add here public include directories
     PRIV_INCLUDE_DIRS   # optional, add here private include directories
-    REQUIRES            mongoose mqtt wifi_connection 
+    REQUIRES            mongoose mqtt wifi_connection esp_driver_gpio
     PRIV_REQUIRES       # optional, list the private requirements	
     
    )

@@ -9973,38 +9973,38 @@ static void s_version_fn(struct mg_connection *c, int ev, void *ev_data) {
     MG_DEBUG(("Got metadata: %.*s", hm->body.len, hm->body.buf));
 	
 	//////////////////////////////
-	if (mg_http_status(hm) != 200) {
-	    s_ota->fn("FAIL: HTTP status");
-	}
-	else if (mg_json_get(hm->body, "$", NULL) != 0) {
-	    s_ota->fn("FAIL: Invalid JSON");
-	}
-	else if (!mg_json_unescape(hm->body, "$.version",
-	                           version, sizeof(version))) {
-	    s_ota->fn("FAIL: Version parsing");
-	}
-	else if (!mg_json_unescape(hm->body, "$.url",
-	                           s_ota->url, sizeof(s_ota->url))) {
-	    s_ota->fn("FAIL: URL parsing");
-	}
-	else if (!mg_json_get_num(hm->body, "$.size", &result)) {
-	    s_ota->fn("FAIL: Size parsing");
-	}
-	else if (result <= 0) {
-	    s_ota->fn("FAIL: Invalid size");
-	}
-	else {
-	    s_ota->size = (size_t) result;
-
-	    MG_DEBUG(("Metadata OK"));
-	    MG_DEBUG(("Version: %s", version));
-	    MG_DEBUG(("URL: %s", s_ota->url));
-	    MG_DEBUG(("Size: %lu", s_ota->size));
-
-	    // Continue with the existing code
-	}
-	
-	/////////////////////
+//	if (mg_http_status(hm) != 200) {
+//	    s_ota->fn("FAIL: HTTP status");
+//	}
+//	else if (mg_json_get(hm->body, "$", NULL) != 0) {
+//	    s_ota->fn("FAIL: Invalid JSON");
+//	}
+//	else if (!mg_json_unescape(hm->body, "$.version",
+//	                           version, sizeof(version))) {
+//	    s_ota->fn("FAIL: Version parsing");
+//	}
+//	else if (!mg_json_unescape(hm->body, "$.url",
+//	                           s_ota->url, sizeof(s_ota->url))) {
+//	    s_ota->fn("FAIL: URL parsing");
+//	}
+//	else if (!mg_json_get_num(hm->body, "$.size", &result)) {
+//	    s_ota->fn("FAIL: Size parsing");
+//	}
+//	else if (result <= 0) {
+//	    s_ota->fn("FAIL: Invalid size");
+//	}
+//	else {
+//	    s_ota->size = (size_t) result;
+//
+//	    MG_DEBUG(("Metadata OK"));
+//	    MG_DEBUG(("Version: %s", version));
+//	    MG_DEBUG(("URL: %s", s_ota->url));
+//	    MG_DEBUG(("Size: %lu", s_ota->size));
+//
+//	    // Continue with the existing code
+//	}
+//	
+//	/////////////////////
 	
     if (mg_http_status(hm) != 200 || mg_json_get(hm->body, "$", NULL) != 0 ||
         !mg_json_unescape(hm->body, "$.version", version, sizeof(version)) ||
