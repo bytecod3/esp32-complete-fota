@@ -37,3 +37,9 @@ TO create a components folder on root and add a component
 
 ## Adding cJSON lib
 ```idf.py add-dependency "espressif/cjson^1.7.19~2" ```
+
+## Expose local server to WAN on Laravel
+```php artisan serve --host=0.0.0.0 --port=8000```
+
+## to test http response on terminal
+```curl -v "http://192.168.100.14:8000/storage/bin_files/1786881656_app-template.bin" -o test.bin```

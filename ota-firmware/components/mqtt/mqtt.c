@@ -74,6 +74,7 @@ char _ota_update_mode[32];
 char _ota_fw_http_url[128];
 
 static const uint64_t http_conn_timeout = 1500; // HTTP connect timeout in milliseconds
+struct mg_mgr http_mgr;
 
 /*========end of OTA variables=====================*/
 
@@ -82,18 +83,17 @@ HTTP OTA event handler function
 */ 
 static void http_ota_fn(struct mg_connection* c, int ev, void* ev_data) {
 	
-	
 	if(ev == MG_EV_OPEN) { // connection created, store connect expiration time in c->data
 		
 		*(uint64_t*) c->data = mg_millis() + http_conn_timeout;
 		
 	} else if(ev == MG_EV_POLL) {
-		if(mg_millis() > *(u_int64_t*) c->data && (c->is_connecting || c->is_resolving) ) {
+		if(mg_millis() > *(uint64_t*) c->data && (c->is_connecting || c->is_resolving) ) {
 			mg_error(c, "HTTP connection timeout");
 		}
 		
 	} else if(ev == MG_EV_CONNECT) { // connected  to server, send the get request
-		// send HTTP get 
+		// send HTTP get
 		ESP_LOGI(HTTP_TAG, "Connected to HTTP server. Sending HTTP GET request");
 		struct mg_str _ota_http_url = mg_str((_ota_fw_http_url));
 		struct mg_str host = mg_url_host(_ota_fw_http_url);
@@ -111,8 +111,28 @@ static void http_ota_fn(struct mg_connection* c, int ev, void* ev_data) {
 		
 	} else if(ev == MG_EV_HTTP_HDRS) {  // http headers received, start OTA streaming
 		struct mg_http_message *hm = (struct mg_http_message*) ev_data;
-		
-		
+		ESP_LOGI(HTTP_TAG, "========== HTTP MESSAGE ==========");
+
+	    ESP_LOGI(HTTP_TAG, "Method: %.*s",
+	             (int) hm->method.len, hm->method.buf);
+
+	    ESP_LOGI(HTTP_TAG, "URI: %.*s",
+	             (int) hm->uri.len, hm->uri.buf);
+
+	    ESP_LOGI(HTTP_TAG, "Protocol: %.*s",
+	             (int) hm->proto.len, hm->proto.buf);
+
+//	    ESP_LOGI(HTTP_TAG, "Response: %.*s",
+//	             (int) hm->res.len, hm->res.buf);
+//
+//	    ESP_LOGI(HTTP_TAG, "Headers: %.*s",
+//	             (int) hm->headers.len, hm->headers.buf);
+
+	    ESP_LOGI(HTTP_TAG, "Body length: %d",
+	             (int) hm->body.len);
+
+	    ESP_LOGI(HTTP_TAG, "==================================");
+	
 		
 		
 	} else if(ev == MG_EV_ERROR) {				/// todo: close connection on error
@@ -285,9 +305,11 @@ static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data) {
 							ESP_LOGI(MQTT_TAG, "update url: %s | length: %d", _ota_fw_http_url, url_len);
 							
 							// CREATE A NEW HTTP CONNECTION
-							struct mg_mgr http_mgr;
+							mg_mgr_init(&http_mgr);
 
 							uint8_t done = 0;
+							
+							ESP_LOGI(MQTT_TAG, "Creating new HTTP connection");
 							mg_http_connect(&http_mgr, _ota_fw_http_url, http_ota_fn, &done);				
 							
 
@@ -399,10 +421,24 @@ void mqtt_loop_task(void* args) {
 	
 	for(;;) {
 		mg_mgr_poll(&mgr, 1000);					/* call event loop every 1 second */
+		
 		vTaskDelay(pdMS_TO_TICKS(10));
 	}		
 
 }
+
+/**
+* @brief Task to handle Polling of HTTP manager for OTA streaming 
+*/
+void http_loop_task(void* args) {
+	mg_mgr_init(&http_mgr);
+	
+	for(;;) {
+		mg_mgr_poll(&http_mgr, 500); /* call event loop every one 500ms*/
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}
+}
+
 
 void init_nvs() {
 	esp_err_t err = nvs_flash_init();
@@ -461,7 +497,7 @@ void init_mqtt() {
 	
 	/* initialise NVS storage */
 	
-	
+	/* create MQTT loop task */
 	if(xTaskCreate(
 		mqtt_loop_task,
 		"mqtt_loop_task",
@@ -475,6 +511,20 @@ void init_mqtt() {
 		mqtt_task_s = "";
 	}
 	
+	/* init HTTP poll */
+	if(xTaskCreate(
+		http_loop_task,
+		"http_loop_task",
+		6000,
+		NULL,
+		1,
+		NULL
+	) == pdPASS) {
+		ESP_LOGI(HTTP_TAG, "Created HTTP loop task");
+	} else{ 
+		ESP_LOGI(HTTP_TAG, "Failed to create HTTP loop task");
+	}
+		
 	ESP_LOGI(MQTT_TAG,"%s", mqtt_task_s);
 }
 

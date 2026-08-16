@@ -1,0 +1,191 @@
+Command: ninja all
+[1/123] Linking C static library esp-idf/mongoose/libmongoose.a
+[2/123] Building C object esp-idf/esp_driver_cam/CMakeFiles/__idf_esp_driver_cam.dir/esp_cam_ctlr.c.obj
+[3/123] Building C object esp-idf/esp_driver_cam/CMakeFiles/__idf_esp_driver_cam.dir/dvp_share_ctrl.c.obj
+[4/123] Linking C static library esp-idf/esp_driver_i2c/libesp_driver_i2c.a
+[5/123] Building C object esp-idf/esp_blockdev_util/CMakeFiles/__idf_esp_blockdev_util.dir/memory.c.obj
+[6/123] Linking C static library esp-idf/esp_hal_ledc/libesp_hal_ledc.a
+[7/123] Linking C static library esp-idf/esp_hal_mcpwm/libesp_hal_mcpwm.a
+[8/123] Building C object esp-idf/esp_blockdev_util/CMakeFiles/__idf_esp_blockdev_util.dir/generic_partition.c.obj
+[9/123] Building C object esp-idf/esp_driver_dac/CMakeFiles/__idf_esp_driver_dac.dir/dac_common.c.obj
+[10/123] Building C object esp-idf/esp_driver_dac/CMakeFiles/__idf_esp_driver_dac.dir/dac_cosine.c.obj
+[11/123] Building C object esp-idf/esp_driver_dac/CMakeFiles/__idf_esp_driver_dac.dir/dac_oneshot.c.obj
+[12/123] Building C object esp-idf/esp_driver_dac/CMakeFiles/__idf_esp_driver_dac.dir/dac_continuous.c.obj
+[13/123] Building C object esp-idf/esp_driver_dac/CMakeFiles/__idf_esp_driver_dac.dir/esp32/dac_dma.c.obj
+[14/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_com.c.obj
+[15/123] Linking C static library esp-idf/esp_hal_pcnt/libesp_hal_pcnt.a
+[16/123] Building C object esp-idf/mqtt/CMakeFiles/__idf_mqtt.dir/mqtt.c.obj
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c: In function 'http_ota_fn':
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:98:31: warning: unused variable '_ota_http_url' [-Wunused-variable]
+   98 |                 struct mg_str _ota_http_url = mg_str((_ota_fw_http_url));
+      |                               ^~~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c: In function 'mqtt_event_handler':
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:199:39: warning: unused variable 'fw_ota_version' [-Wunused-variable]
+  199 |                                 float fw_ota_version = 0.0;
+      |                                       ^~~~~~~~~~~~~~
+In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:13:
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h: At top level:
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:36:15: warning: 'mg_mqtt_next_topic' declared 'static' but never defined [-Wunused-function]
+   36 | static size_t mg_mqtt_next_topic(struct mg_mqtt_message *msg,struct mg_str *topic, uint8_t *qos, size_t pos);
+      |               ^~~~~~~~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:371:13: warning: 'mg_log_redirect' defined but not used [-Wunused-function]
+  371 | static void mg_log_redirect(char ch, void* userdata) {
+      |             ^~~~~~~~~~~~~~~
+In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/mqtt.c:15:
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt_settings.h:12:20: warning: 'COMMANDS_TOPIC' defined but not used [-Wunused-variable]
+   12 | static const char* COMMANDS_TOPIC = "ota_broker/commands";
+      |                    ^~~~~~~~~~~~~~
+[17/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_cmpr.c.obj
+[18/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_fault.c.obj
+[19/123] Linking C static library esp-idf/esp_hal_rmt/libesp_hal_rmt.a
+[20/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_sync.c.obj
+[21/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_cap.c.obj
+[22/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_gen.c.obj
+[23/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_oper.c.obj
+[24/123] Building C object esp-idf/esp_driver_rmt/CMakeFiles/__idf_esp_driver_rmt.dir/src/rmt_common.c.obj
+[25/123] Building C object esp-idf/esp_driver_rmt/CMakeFiles/__idf_esp_driver_rmt.dir/src/rmt_encoder.c.obj
+[26/123] Building C object esp-idf/esp_driver_rmt/CMakeFiles/__idf_esp_driver_rmt.dir/src/rmt_encoder_copy.c.obj
+[27/123] Building C object esp-idf/esp_driver_rmt/CMakeFiles/__idf_esp_driver_rmt.dir/src/rmt_encoder_bytes.c.obj
+[28/123] Linking C static library esp-idf/esp_driver_sdmmc/libesp_driver_sdmmc.a
+[29/123] Linking C static library esp-idf/esp_driver_sdspi/libesp_driver_sdspi.a
+[30/123] Building C object esp-idf/esp_driver_mcpwm/CMakeFiles/__idf_esp_driver_mcpwm.dir/src/mcpwm_timer.c.obj
+[31/123] Building C object esp-idf/esp_driver_rmt/CMakeFiles/__idf_esp_driver_rmt.dir/src/rmt_encoder_simple.c.obj
+[32/123] Building C object esp-idf/esp_driver_pcnt/CMakeFiles/__idf_esp_driver_pcnt.dir/src/pulse_cnt.c.obj
+[33/123] Building C object esp-idf/esp_driver_sdm/CMakeFiles/__idf_esp_driver_sdm.dir/src/sdm.c.obj
+[34/123] Building C object esp-idf/esp_driver_ledc/CMakeFiles/__idf_esp_driver_ledc.dir/src/ledc.c.obj
+[35/123] Building C object esp-idf/esp_driver_touch_sens/CMakeFiles/__idf_esp_driver_touch_sens.dir/hw_ver1/touch_version_specific.c.obj
+[36/123] Building C object esp-idf/esp_driver_twai/CMakeFiles/__idf_esp_driver_twai.dir/esp_twai.c.obj
+[37/123] Building C object esp-idf/esp_driver_touch_sens/CMakeFiles/__idf_esp_driver_touch_sens.dir/common/touch_sens_common.c.obj
+[38/123] Building C object esp-idf/esp_driver_sdio/CMakeFiles/__idf_esp_driver_sdio.dir/src/sdio_slave.c.obj
+[39/123] Building C object esp-idf/esp_driver_rmt/CMakeFiles/__idf_esp_driver_rmt.dir/src/rmt_rx.c.obj
+[40/123] Linking C static library esp-idf/esp_hal_lcd/libesp_hal_lcd.a
+[41/123] Building C object esp-idf/esp_eth/CMakeFiles/__idf_esp_eth.dir/src/esp_eth_netif_glue.c.obj
+[42/123] Building C object esp-idf/esp_eth/CMakeFiles/__idf_esp_eth.dir/src/phy/esp_eth_phy_generic.c.obj
+[43/123] Building C object esp-idf/esp_driver_rmt/CMakeFiles/__idf_esp_driver_rmt.dir/src/rmt_tx.c.obj
+[44/123] Building C object esp-idf/esp_driver_twai/CMakeFiles/__idf_esp_driver_twai.dir/esp_twai_onchip.c.obj
+[45/123] Building C object esp-idf/esp_eth/CMakeFiles/__idf_esp_eth.dir/src/mac/esp_eth_mac_esp_dma.c.obj
+[46/123] Linking C static library esp-idf/esp_https_server/libesp_https_server.a
+[47/123] Building C object esp-idf/esp_hid/CMakeFiles/__idf_esp_hid.dir/src/esp_hidd.c.obj
+[48/123] Building C object esp-idf/esp_eth/CMakeFiles/__idf_esp_eth.dir/src/esp_eth.c.obj
+[49/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/src/esp_lcd_common.c.obj
+[50/123] Building C object esp-idf/esp_hid/CMakeFiles/__idf_esp_hid.dir/src/esp_hid_common.c.obj
+[51/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/src/esp_lcd_panel_io.c.obj
+[52/123] Building C object esp-idf/esp_eth/CMakeFiles/__idf_esp_eth.dir/src/phy/esp_eth_phy_802_3.c.obj
+[53/123] Building C object esp-idf/esp_eth/CMakeFiles/__idf_esp_eth.dir/src/mac/esp_eth_mac_esp_gpio.c.obj
+[54/123] Building C object esp-idf/esp_eth/CMakeFiles/__idf_esp_eth.dir/src/mac/esp_eth_mac_esp.c.obj
+[55/123] Linking C static library esp-idf/protocomm/libprotocomm.a
+[56/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/src/esp_lcd_panel_ops.c.obj
+[57/123] Building C object esp-idf/esp_hid/CMakeFiles/__idf_esp_hid.dir/src/esp_hidh.c.obj
+[58/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/src/esp_lcd_panel_st7789.c.obj
+[59/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/src/esp_lcd_panel_ssd1306.c.obj
+[60/123] Linking C static library esp-idf/wear_levelling/libwear_levelling.a
+[61/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/i2c/esp_lcd_panel_io_i2c.c.obj
+[62/123] Building C object esp-idf/esp_local_ctrl/CMakeFiles/__idf_esp_local_ctrl.dir/src/esp_local_ctrl_transport_httpd.c.obj
+[63/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/spi/esp_lcd_panel_io_spi.c.obj
+[64/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/diskio/diskio_wl.c.obj
+[65/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/diskio/diskio.c.obj
+[66/123] Building C object esp-idf/esp_local_ctrl/CMakeFiles/__idf_esp_local_ctrl.dir/proto-c/esp_local_ctrl.pb-c.c.obj
+[67/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/diskio/diskio_rawflash.c.obj
+[68/123] Building C object esp-idf/esp_local_ctrl/CMakeFiles/__idf_esp_local_ctrl.dir/src/esp_local_ctrl.c.obj
+[69/123] Building C object esp-idf/esp_local_ctrl/CMakeFiles/__idf_esp_local_ctrl.dir/src/esp_local_ctrl_handler.c.obj
+[70/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/port/freertos/ffsystem.c.obj
+[71/123] Building C object esp-idf/perfmon/CMakeFiles/__idf_perfmon.dir/xtensa_perfmon_access.c.obj
+[72/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/src/ffunicode.c.obj
+[73/123] Building C object esp-idf/perfmon/CMakeFiles/__idf_perfmon.dir/xtensa_perfmon_apis.c.obj
+[74/123] Building C object esp-idf/perfmon/CMakeFiles/__idf_perfmon.dir/xtensa_perfmon_masks.c.obj
+[75/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/diskio/diskio_sdmmc.c.obj
+[76/123] Building C object esp-idf/esp_lcd/CMakeFiles/__idf_esp_lcd.dir/i80/esp_lcd_panel_io_i2s.c.obj
+[77/123] Building C object esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/spiffs_api.c.obj
+[78/123] Building C object esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/spiffs/src/spiffs_cache.c.obj
+[79/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/vfs/vfs_fat_spiflash.c.obj
+[80/123] Building C object esp-idf/rt/CMakeFiles/__idf_rt.dir/FreeRTOS_POSIX_utils.c.obj
+[81/123] Building C object esp-idf/rt/CMakeFiles/__idf_rt.dir/FreeRTOS_POSIX_mqueue.c.obj
+[82/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/vfs/vfs_fat_sdmmc.c.obj
+[83/123] Linking C static library esp-idf/wifi_connection/libwifi_connection.a
+[84/123] Linking C static library esp-idf/mqtt/libmqtt.a
+[85/123] Linking C static library esp-idf/esp_driver_gptimer/libesp_driver_gptimer.a
+[86/123] Linking C static library esp-idf/cmock/libcmock.a
+[87/123] Linking C static library esp-idf/esp_blockdev_util/libesp_blockdev_util.a
+[88/123] Linking C static library esp-idf/driver/libdriver.a
+[89/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/vfs/vfs_fat.c.obj
+[90/123] Linking C static library esp-idf/esp_driver_cam/libesp_driver_cam.a
+[91/123] Linking C static library esp-idf/esp_driver_dac/libesp_driver_dac.a
+[92/123] Building C object esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/spiffs/src/spiffs_gc.c.obj
+[93/123] Linking C static library esp-idf/esp_driver_pcnt/libesp_driver_pcnt.a
+[94/123] Linking C static library esp-idf/esp_driver_mcpwm/libesp_driver_mcpwm.a
+[95/123] Linking C static library esp-idf/esp_driver_ledc/libesp_driver_ledc.a
+[96/123] Linking C static library esp-idf/esp_driver_sdio/libesp_driver_sdio.a
+[97/123] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/main/main.c:5:
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:36:15: warning: 'mg_mqtt_next_topic' declared 'static' but never defined [-Wunused-function]
+   36 | static size_t mg_mqtt_next_topic(struct mg_mqtt_message *msg,struct mg_str *topic, uint8_t *qos, size_t pos);
+      |               ^~~~~~~~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:45:13: warning: 'mqtt_event_handler' declared 'static' but never defined [-Wunused-function]
+   45 | static void mqtt_event_handler(struct mg_connection* c, int ev, void* ev_data);
+      |             ^~~~~~~~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:52:13: warning: 'mqtt_reconnect_timer' declared 'static' but never defined [-Wunused-function]
+   52 | static void mqtt_reconnect_timer(void* arg);
+      |             ^~~~~~~~~~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:58:13: warning: 'mqtt_publish_fn' declared 'static' but never defined [-Wunused-function]
+   58 | static void mqtt_publish_fn(void* arg);
+      |             ^~~~~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:63:13: warning: 'mg_log_redirect' declared 'static' but never defined [-Wunused-function]
+   63 | static void mg_log_redirect(char ch, void* userdata);
+      |             ^~~~~~~~~~~~~~~
+In file included from /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/main/main.c:6:
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/wifi_connection/include/wifi_connection.h:40:13: warning: 'request_page' declared 'static' but never defined [-Wunused-function]
+   40 | static void request_page(void);
+      |             ^~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/wifi_connection/include/wifi_connection.h:41:13: warning: 'handle_wifi_connection' declared 'static' but never defined [-Wunused-function]
+   41 | static void handle_wifi_connection(void*, esp_event_base_t, int32_t, void*);
+      |             ^~~~~~~~~~~~~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/wifi_connection/include/wifi_connection.h:36:12: warning: 'retry_count' defined but not used [-Wunused-variable]
+   36 | static int retry_count = 0;
+      |            ^~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/wifi_connection/include/wifi_connection.h:35:27: warning: 'wifi_events' defined but not used [-Wunused-variable]
+   35 | static EventGroupHandle_t wifi_events;          /* used to pass wifi events across the system */
+      |                           ^~~~~~~~~~~
+/home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/components/mqtt/include/mqtt.h:26:30: warning: 's_conn' defined but not used [-Wunused-variable]
+   26 | static struct mg_connection* s_conn;                            /* connection handle */                                 /* main connection handle */
+      |                              ^~~~~~
+[98/123] Linking C static library esp-idf/esp_driver_rmt/libesp_driver_rmt.a
+[99/123] Linking C static library esp-idf/esp_driver_sdm/libesp_driver_sdm.a
+[100/123] Building C object esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/spiffs/src/spiffs_check.c.obj
+[101/123] Linking C static library esp-idf/esp_driver_twai/libesp_driver_twai.a
+[102/123] Linking C static library esp-idf/esp_driver_touch_sens/libesp_driver_touch_sens.a
+[103/123] Linking C static library esp-idf/esp_eth/libesp_eth.a
+[104/123] Linking C static library esp-idf/esp_lcd/libesp_lcd.a
+[105/123] Linking C static library esp-idf/esp_local_ctrl/libesp_local_ctrl.a
+[106/123] Linking C static library esp-idf/perfmon/libperfmon.a
+[107/123] Linking C static library esp-idf/esp_hid/libesp_hid.a
+[108/123] Linking C static library esp-idf/rt/librt.a
+[109/123] Linking C static library esp-idf/main/libmain.a
+[110/123] Building C object esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/spiffs/src/spiffs_hydrogen.c.obj
+[111/123] Building C object esp-idf/fatfs/CMakeFiles/__idf_fatfs.dir/src/ff.c.obj
+[112/123] Linking C static library esp-idf/fatfs/libfatfs.a
+[113/123] Building C object esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/esp_spiffs.c.obj
+[114/123] Building C object esp-idf/spiffs/CMakeFiles/__idf_spiffs.dir/spiffs/src/spiffs_nucleus.c.obj
+[115/123] Linking C static library esp-idf/spiffs/libspiffs.a
+[116/123] Performing build step for 'bootloader'
+[1/3] Linking C executable bootloader.elf
+[2/3] Generating binary image from built executable
+esptool v5.3.0
+Creating ESP32 image...
+Merged 2 ELF sections.
+Successfully created ESP32 image.
+Generated /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/bootloader/bootloader.bin
+[3/3] cd /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/bootloader && /home/edwin/.espressif/tools/python/v6.0.1/venv/bin/python /home/edwin/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/bootloader/bootloader.bin
+Bootloader binary size 0x6610 bytes. 0x9f0 bytes (9%) free.
+[117/123] No install step for 'bootloader'
+[118/123] Completed 'bootloader'
+[119/123] Generating esp-idf/esp_system/ld/sections.ld
+[120/123] Building C object CMakeFiles/app-template.elf.dir/project_elf_src_esp32.c.obj
+[121/123] Linking CXX executable app-template.elf
+[122/123] Generating binary image from built executable
+esptool v5.3.0
+Creating ESP32 image...
+Merged 3 ELF sections.
+Successfully created ESP32 image.
+Generated /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/app-template.bin
+[123/123] cd /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build && /home/edwin/.espressif/tools/python/v6.0.1/venv/bin/python /home/edwin/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/partition_table/partition-table.bin /home/edwin/Desktop/projects/esp32-complete-fota/ota-firmware/build/app-template.bin
+app-template.bin binary size 0xd56b0 bytes. Smallest app partition is 0x100000 bytes. 0x2a950 bytes (17%) free.

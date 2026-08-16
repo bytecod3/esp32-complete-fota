@@ -17,5 +17,19 @@ Route::post('/upload_bin',
 //    ->name('files.download')
 //    ->middleware('signed'); // Validates the signature
 
+// This will serve the binary file to the GET request
+Route::get('/storage/bin_files/{filename}', function($filename) {
+    $path = storage_path('app/public/' . $filename);
 
+    // check if file exists
+    if(!file_exists($path)) {
+        return response()->json([
+            'error' => 'Firmware file not found'
+        ], 404);
+    }
+
+    return response()->file($path, 
+        ['Content-Type' => 'application/octet-stream']);
+
+});
 

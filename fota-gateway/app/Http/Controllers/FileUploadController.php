@@ -26,7 +26,8 @@ class FileUploadController extends Controller
         $device_id = $request->input('device_id');
         $mode = $request->input('mode');
         $time = 0;
-        $url = Storage::disk('public')->url($filename);
+        $bin_folder = "/bin_files/";
+        $url = Storage::disk('public')->url($bin_folder.$filename);
 
         if($mode == "Scheduled") {
             $time = "2026-06-21T14:30:30Z";
